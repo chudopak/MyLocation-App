@@ -24,17 +24,17 @@
             </objects>
             <point key="canvasLocation" x="309" y="352"/>
         </scene>
-        <!--Item 1-->
+        <!--Current Location-->
         <scene sceneID="cTi-nW-heB">
             <objects>
-                <viewController id="dJ2-C6-U3b" customClass="CurrentLocationViewController" customModule="MyLocation" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Current Location" id="dJ2-C6-U3b" customClass="CurrentLocationViewController" customModule="MyLocation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jwH-fX-Q30">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="AkI-21-a9k"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="StS-U3-min"/>
+                    <tabBarItem key="tabBarItem" title="Tag" id="StS-U3-min"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZqJ-kJ-8Jm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
