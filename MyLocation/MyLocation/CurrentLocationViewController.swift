@@ -12,6 +12,7 @@ import CoreLocation
 class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate {
 	
 	let locationManager = CLLocationManager()
+	var location: CLLocation?
 	
 	@IBOutlet weak var messageLabel: UILabel!
 	@IBOutlet weak var latitudeLabel: UILabel!
@@ -19,6 +20,11 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 	@IBOutlet weak var addressLabel: UILabel!
 	@IBOutlet weak var tagButton: UIButton!
 	@IBOutlet weak var getButton: UIButton!
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		updateLabels()
+	}
 	
 	@IBAction func getLocation() {
 		let authorizationStatus = locationManager.authorizationStatus
@@ -32,11 +38,6 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 			return
 		default:
 			print("All ok")
-		}
-		
-		if authorizationStatus == .notDetermined {
-			locationManager.requestWhenInUseAuthorization()
-			return
 		}
 		
 		locationManager.delegate = self
@@ -61,8 +62,24 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 	}
 	
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-		let newLocation = locations.last!
-		print("didUpdateLocations \(newLocation)")
+		location = locations.last!
+		print("didUpdateLocations \(String(describing: location))")
+		updateLabels()
+	}
+	
+	func updateLabels() {
+		if let location = location {
+			latitudeLabel.text = String(format: "%.8f", location.coordinate.latitude)
+			longitudeLabel.text = String(format: "%.8f", location.coordinate.longitude)
+			tagButton.isHidden = false
+			messageLabel.text = ""
+		} else {
+			latitudeLabel.text = ""
+			longitudeLabel.text = ""
+			addressLabel.text = ""
+			tagButton.isHidden = true
+			messageLabel.text = "Tap 'Get My Location' to Start"
+		}
 	}
 	
 }
