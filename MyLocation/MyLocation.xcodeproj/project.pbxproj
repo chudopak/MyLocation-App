@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D6FF3FB27465AF3007EA2B8 /* LocationDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6FF3FA27465AF3007EA2B8 /* LocationDetailsViewController.swift */; };
 		7D8CCF6F273ED3E400A7E277 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8CCF6E273ED3E400A7E277 /* AppDelegate.swift */; };
 		7D8CCF71273ED3E400A7E277 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8CCF70273ED3E400A7E277 /* SceneDelegate.swift */; };
 		7D8CCF73273ED3E400A7E277 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8CCF72273ED3E400A7E277 /* TabBarController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7D6FF3FA27465AF3007EA2B8 /* LocationDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailsViewController.swift; sourceTree = "<group>"; };
 		7D8CCF6B273ED3E400A7E277 /* MyLocation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyLocation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D8CCF6E273ED3E400A7E277 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7D8CCF70273ED3E400A7E277 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				7D8CCF72273ED3E400A7E277 /* TabBarController.swift */,
 				7D8CCF82273ED6DA00A7E277 /* CurrentLocationViewController.swift */,
 				7D8CCF74273ED3E400A7E277 /* Main.storyboard */,
+				7D6FF3FA27465AF3007EA2B8 /* LocationDetailsViewController.swift */,
 				7D8CCF77273ED3E500A7E277 /* Assets.xcassets */,
 				7D8CCF79273ED3E500A7E277 /* LaunchScreen.storyboard */,
 				7D8CCF7C273ED3E500A7E277 /* Info.plist */,
@@ -141,6 +144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D8CCF73273ED3E400A7E277 /* TabBarController.swift in Sources */,
+				7D6FF3FB27465AF3007EA2B8 /* LocationDetailsViewController.swift in Sources */,
 				7D8CCF83273ED6DA00A7E277 /* CurrentLocationViewController.swift in Sources */,
 				7D8CCF6F273ED3E400A7E277 /* AppDelegate.swift in Sources */,
 				7D8CCF71273ED3E400A7E277 /* SceneDelegate.swift in Sources */,

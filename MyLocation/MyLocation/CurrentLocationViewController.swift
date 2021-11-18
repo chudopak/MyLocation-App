@@ -44,7 +44,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 			locationManager.requestWhenInUseAuthorization()
 			return false
 		case .denied, .restricted:
-			showLocationServicesDeniedAlert()
+			_showLocationServicesDeniedAlert()
 			return false
 		default:
 			return true
@@ -68,7 +68,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 		_configureGetButtonText()
 	}
 	
-	func showLocationServicesDeniedAlert() {
+	private func _showLocationServicesDeniedAlert() {
 		let alert = UIAlertController(title: "Location Disabeled",
 									  message: "Go to preferences and enable location ",
 									  preferredStyle: .alert)
@@ -160,13 +160,10 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 	
 	@objc func _didTimeOut() {
 		if location == nil {
-			print("***Time Out")
 			_stopLocationManager()
 			lastLocationError = NSError(domain: "MyLocationDomainError", code: 1, userInfo: nil)
 			_updateLabels()
 			_configureGetButtonText()
-		} else {
-			print("***Time Out Without stopping")
 		}
 	}
 
@@ -192,9 +189,18 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 		}
 	}
 	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if (segue.identifier == "ShowTagLocation") {
+			let navigationController = segue.destination as! UINavigationController
+			let controller = navigationController.topViewController as! LocationDetailsViewController
+			controller.location = location
+			controller.placemark = placemark
+		}
+	}
+	
 	//MARK: - CLLocationManagerDelegate
 	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-		print("didFailWitherror \(error)")
+//		print("didFailWitherror \(error)")
 		
 		//return because app loking for location but can't find it FOR NOW but it doesn't mean's all is lost
 		if (error as NSError).code == CLError.locationUnknown.rawValue {
@@ -211,7 +217,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 		performingReverseGeocoding = true
 		geocoder.reverseGeocodeLocation(newLocation, completionHandler: {
 			[weak self] placemark, error in
-			print("***Found placemarks: \(String(describing: placemark)), error: \(String(describing: error))")
+//			print("***Found placemarks: \(String(describing: placemark)), error: \(String(describing: error))")
 			self?.lastGeocodingError = error
 			if error == nil, let p = placemark, !p.isEmpty{
 				self?.placemark = p.last!
@@ -243,7 +249,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 	private func _stoppingIfNoAccuracyImprovementForTenSeconds(newLocation: CLLocation) {
 		let timeInterval = newLocation.timestamp.timeIntervalSince(location!.timestamp)
 		if (timeInterval > 10) {
-			print("***Force done!")
+//			print("***Force done!")
 			_stopLocationManager()
 			_updateLabels()
 			_configureGetButtonText()
@@ -252,8 +258,8 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 	
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 		let newLocation = locations.last!
-		print("didUpdateLocations \(String(describing: newLocation))")
-		print("Accuracy", newLocation.horizontalAccuracy)
+//		print("didUpdateLocations \(String(describing: newLocation))")
+//		print("Accuracy", newLocation.horizontalAccuracy)
 		
 		if (newLocation.timestamp.timeIntervalSinceNow < -5) {
 			return
