@@ -193,7 +193,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 		if (segue.identifier == "ShowTagLocation") {
 			let navigationController = segue.destination as! UINavigationController
 			let controller = navigationController.topViewController as! LocationDetailsViewController
-			controller.location = location
+			controller.location = location?.coordinate
 			controller.placemark = placemark
 		}
 	}
