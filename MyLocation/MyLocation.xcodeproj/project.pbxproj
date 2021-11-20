@@ -15,6 +15,8 @@
 		7D8CCF78273ED3E500A7E277 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D8CCF77273ED3E500A7E277 /* Assets.xcassets */; };
 		7D8CCF7B273ED3E500A7E277 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D8CCF79273ED3E500A7E277 /* LaunchScreen.storyboard */; };
 		7D8CCF83273ED6DA00A7E277 /* CurrentLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8CCF82273ED6DA00A7E277 /* CurrentLocationViewController.swift */; };
+		7DB8F6E5274904270070564E /* CategoryPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB8F6E4274904270070564E /* CategoryPickerViewController.swift */; };
+		7DB8F6E727491CF30070564E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB8F6E627491CF30070564E /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		7D8CCF7A273ED3E500A7E277 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7D8CCF7C273ED3E500A7E277 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D8CCF82273ED6DA00A7E277 /* CurrentLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationViewController.swift; sourceTree = "<group>"; };
+		7DB8F6E4274904270070564E /* CategoryPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPickerViewController.swift; sourceTree = "<group>"; };
+		7DB8F6E627491CF30070564E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +70,8 @@
 				7D8CCF82273ED6DA00A7E277 /* CurrentLocationViewController.swift */,
 				7D8CCF74273ED3E400A7E277 /* Main.storyboard */,
 				7D6FF3FA27465AF3007EA2B8 /* LocationDetailsViewController.swift */,
+				7DB8F6E4274904270070564E /* CategoryPickerViewController.swift */,
+				7DB8F6E627491CF30070564E /* Utils.swift */,
 				7D8CCF77273ED3E500A7E277 /* Assets.xcassets */,
 				7D8CCF79273ED3E500A7E277 /* LaunchScreen.storyboard */,
 				7D8CCF7C273ED3E500A7E277 /* Info.plist */,
@@ -143,8 +149,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DB8F6E5274904270070564E /* CategoryPickerViewController.swift in Sources */,
 				7D8CCF73273ED3E400A7E277 /* TabBarController.swift in Sources */,
 				7D6FF3FB27465AF3007EA2B8 /* LocationDetailsViewController.swift in Sources */,
+				7DB8F6E727491CF30070564E /* Utils.swift in Sources */,
 				7D8CCF83273ED6DA00A7E277 /* CurrentLocationViewController.swift in Sources */,
 				7D8CCF6F273ED3E400A7E277 /* AppDelegate.swift in Sources */,
 				7D8CCF71273ED3E400A7E277 /* SceneDelegate.swift in Sources */,

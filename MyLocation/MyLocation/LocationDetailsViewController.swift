@@ -20,6 +20,7 @@ class LocationDetailsViewController : UITableViewController {
 	
 	var location: CLLocationCoordinate2D?
 	weak var placemark: CLPlacemark?
+	var category = CategoryCell(name: "No Category")
 	
 	@IBOutlet weak var addressCellView: UIView!
 	@IBOutlet weak var descriptionTextView: UITextView!
@@ -103,13 +104,31 @@ class LocationDetailsViewController : UITableViewController {
 		dateLabel.text = dateFormatter.string(from: Date())
 	}
 	
+	private func _updateDescriptionAndCategoryName() {
+		descriptionTextView.text = ""
+		categoryLabel.text = category.name
+	}
+	
 	private func _updateLabels() {
 		_updateLocation()
 		_updateAddress()
 		_updateDate()
+		_updateDescriptionAndCategoryName()
 	}
 	
-
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if (segue.identifier == "PickCategory") {
+			let controller = segue.destination as! CategoryPickerViewController
+			controller.selectedCategory = category
+		}
+	}
+	
+	@IBAction func categoryPickerDidPickCategory(_ segue: UIStoryboardSegue) {
+		let controller = segue.source as! CategoryPickerViewController
+		category = controller.selectedCategory
+		categoryLabel.text = category.name
+	}
+	
 	@IBAction func cancel(_ sender: UIBarButtonItem) {
 		dismiss(animated: true, completion: nil)
 	}
