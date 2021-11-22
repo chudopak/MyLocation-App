@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D1D52CD274BA11000724AA9 /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1D52CC274BA11000724AA9 /* HudView.swift */; };
+		7D1D52CF274BB8A800724AA9 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1D52CE274BB8A800724AA9 /* Functions.swift */; };
 		7D6FF3FB27465AF3007EA2B8 /* LocationDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6FF3FA27465AF3007EA2B8 /* LocationDetailsViewController.swift */; };
 		7D8CCF6F273ED3E400A7E277 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8CCF6E273ED3E400A7E277 /* AppDelegate.swift */; };
 		7D8CCF71273ED3E400A7E277 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8CCF70273ED3E400A7E277 /* SceneDelegate.swift */; };
@@ -20,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7D1D52CC274BA11000724AA9 /* HudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HudView.swift; sourceTree = "<group>"; };
+		7D1D52CE274BB8A800724AA9 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		7D6FF3FA27465AF3007EA2B8 /* LocationDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailsViewController.swift; sourceTree = "<group>"; };
 		7D8CCF6B273ED3E400A7E277 /* MyLocation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyLocation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D8CCF6E273ED3E400A7E277 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -70,6 +74,8 @@
 				7D8CCF82273ED6DA00A7E277 /* CurrentLocationViewController.swift */,
 				7D8CCF74273ED3E400A7E277 /* Main.storyboard */,
 				7D6FF3FA27465AF3007EA2B8 /* LocationDetailsViewController.swift */,
+				7D1D52CE274BB8A800724AA9 /* Functions.swift */,
+				7D1D52CC274BA11000724AA9 /* HudView.swift */,
 				7DB8F6E4274904270070564E /* CategoryPickerViewController.swift */,
 				7DB8F6E627491CF30070564E /* Utils.swift */,
 				7D8CCF77273ED3E500A7E277 /* Assets.xcassets */,
@@ -151,8 +157,10 @@
 			files = (
 				7DB8F6E5274904270070564E /* CategoryPickerViewController.swift in Sources */,
 				7D8CCF73273ED3E400A7E277 /* TabBarController.swift in Sources */,
+				7D1D52CF274BB8A800724AA9 /* Functions.swift in Sources */,
 				7D6FF3FB27465AF3007EA2B8 /* LocationDetailsViewController.swift in Sources */,
 				7DB8F6E727491CF30070564E /* Utils.swift in Sources */,
+				7D1D52CD274BA11000724AA9 /* HudView.swift in Sources */,
 				7D8CCF83273ED6DA00A7E277 /* CurrentLocationViewController.swift in Sources */,
 				7D8CCF6F273ED3E400A7E277 /* AppDelegate.swift in Sources */,
 				7D8CCF71273ED3E400A7E277 /* SceneDelegate.swift in Sources */,
