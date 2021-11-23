@@ -165,8 +165,8 @@ class LocationDetailsViewController : UITableViewController {
 	@IBAction func done(_ sender: UIBarButtonItem) {
 		let hudView = HudView.hud(inView: navigationController!.view, animated: true)
 		hudView.text = "Tagged"
-		afterDelay(0.6, closure: {
+		afterDelay(0.6) {
 			self.dismiss(animated: true, completion: nil)
-		})
+		}
 	}
 }
