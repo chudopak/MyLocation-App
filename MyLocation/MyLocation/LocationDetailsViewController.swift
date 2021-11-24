@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import CoreLocation
+import CoreData
 
 private let dateFormatter: DateFormatter = {
 	let formatter = DateFormatter()
@@ -18,16 +19,18 @@ private let dateFormatter: DateFormatter = {
 
 class LocationDetailsViewController : UITableViewController {
 	
-	var location: CLLocationCoordinate2D?
-	weak var placemark: CLPlacemark?
-	var category = CategoryCell(name: "No Category")
+	var					location: CLLocationCoordinate2D?
+	weak var			placemark: CLPlacemark?
+	var 				category = CategoryCell(name: "No Category")
 	
-	@IBOutlet weak var addressCellView: UIView!
-	@IBOutlet weak var descriptionTextView: UITextView!
-	@IBOutlet weak var categoryLabel: UILabel!
-	@IBOutlet weak var latitudeLabel: UILabel!
-	@IBOutlet weak var longitudeLabel: UILabel!
-	@IBOutlet weak var dateLabel: UILabel!
+	var managedObjectContext: NSManagedObjectContext!
+	
+	@IBOutlet weak var	addressCellView: UIView!
+	@IBOutlet weak var	descriptionTextView: UITextView!
+	@IBOutlet weak var	categoryLabel: UILabel!
+	@IBOutlet weak var	latitudeLabel: UILabel!
+	@IBOutlet weak var	longitudeLabel: UILabel!
+	@IBOutlet weak var	dateLabel: UILabel!
 	
 	let addressLabel: UILabel = {
 		let label = UILabel()

@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import CoreLocation
+import CoreData
 
 class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate {
 	
@@ -23,6 +24,8 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 	
 	var timer: Timer?
 	
+	var managedObjectContext: NSManagedObjectContext!
+	
 	@IBOutlet weak var messageLabel: UILabel!
 	@IBOutlet weak var latitudeLabel: UILabel!
 	@IBOutlet weak var longitudeLabel: UILabel!
@@ -34,21 +37,6 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 		super.viewDidLoad()
 		_updateLabels()
 		_configureGetButtonText()
-	}
-	
-	private func _validateAuthorizationStatus() -> Bool{
-		let authorizationStatus = locationManager.authorizationStatus
-		
-		switch authorizationStatus {
-		case .notDetermined:
-			locationManager.requestWhenInUseAuthorization()
-			return false
-		case .denied, .restricted:
-			_showLocationServicesDeniedAlert()
-			return false
-		default:
-			return true
-		}
 	}
 	
 	@IBAction func getLocation() {
@@ -66,6 +54,21 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 		}
 		_updateLabels()
 		_configureGetButtonText()
+	}
+
+	private func _validateAuthorizationStatus() -> Bool{
+		let authorizationStatus = locationManager.authorizationStatus
+		
+		switch authorizationStatus {
+		case .notDetermined:
+			locationManager.requestWhenInUseAuthorization()
+			return false
+		case .denied, .restricted:
+			_showLocationServicesDeniedAlert()
+			return false
+		default:
+			return true
+		}
 	}
 	
 	private func _showLocationServicesDeniedAlert() {
@@ -195,6 +198,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 			let controller = navigationController.topViewController as! LocationDetailsViewController
 			controller.location = location?.coordinate
 			controller.placemark = placemark
+			controller.managedObjectContext = managedObjectContext
 		}
 	}
 	

@@ -6,10 +6,24 @@
 //
 
 import UIKit
+import CoreData
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	var window: UIWindow?
+
+	lazy var persistentContainer: NSPersistentContainer = {
+		let container = NSPersistentContainer(name: "DataModel")
+		container.loadPersistentStores(completionHandler: {
+			storeDescription, error in
+			if let error = error {
+				fatalError("Could load data store \(error)")
+			}
+		})
+		return (container)
+	}()
+	
+	lazy var managedObjectContext: NSManagedObjectContext = self.persistentContainer.viewContext
 
 
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -46,7 +60,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		// Use this method to save data, release shared resources, and store enough scene-specific state information
 		// to restore the scene back to its current state.
 	}
-
-
 }
 
