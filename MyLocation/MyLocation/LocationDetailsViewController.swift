@@ -19,11 +19,14 @@ private let dateFormatter: DateFormatter = {
 
 class LocationDetailsViewController : UITableViewController {
 	
-	var					location: CLLocationCoordinate2D?
-	weak var			placemark: CLPlacemark?
-	var 				category = CategoryCell(name: "No Category")
+	var			location: CLLocationCoordinate2D?
+	weak var	placemark: CLPlacemark?
+	var 		category = CategoryCell(name: "No Category")
 	
-	var managedObjectContext: NSManagedObjectContext!
+	var			managedObjectContext: NSManagedObjectContext!
+	
+	var			date = Date()
+	
 	
 	@IBOutlet weak var	addressCellView: UIView!
 	@IBOutlet weak var	descriptionTextView: UITextView!
@@ -133,7 +136,7 @@ class LocationDetailsViewController : UITableViewController {
 	}
 	
 	private func _updateDate() {
-		dateLabel.text = dateFormatter.string(from: Date())
+		dateLabel.text = dateFormatter.string(from: date)
 	}
 	
 	private func _updateDescriptionAndCategoryName() {
@@ -168,8 +171,24 @@ class LocationDetailsViewController : UITableViewController {
 	@IBAction func done(_ sender: UIBarButtonItem) {
 		let hudView = HudView.hud(inView: navigationController!.view, animated: true)
 		hudView.text = "Tagged"
-		afterDelay(0.6) {
-			self.dismiss(animated: true, completion: nil)
+		
+		let coreDataLocation = Location(context: managedObjectContext)
+
+		coreDataLocation.locationDescription = descriptionTextView.text
+		coreDataLocation.category = category.name
+		coreDataLocation.latitude = location?.latitude ?? 0.0
+		coreDataLocation.longitude = location?.longitude ?? 0.0
+		coreDataLocation.date = date
+		coreDataLocation.placemark = placemark
+		
+		
+		do {
+			try managedObjectContext.save()
+			afterDelay(0.6) {
+				self.dismiss(animated: true, completion: nil)
+			}
+		} catch {
+			fatalError("Error: \(error)")
 		}
 	}
 }
