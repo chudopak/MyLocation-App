@@ -55,11 +55,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7D6E73AE27536D3000BA5E23 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				7DAC1CD2274E64C40042AC29 /* Location+CoreDataProperties.swift */,
+				7DAC1CD1274E64C40042AC29 /* Location+CoreDataClass.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		7D8CCF62273ED3E400A7E277 = {
 			isa = PBXGroup;
 			children = (
-				7DAC1CD1274E64C40042AC29 /* Location+CoreDataClass.swift */,
-				7DAC1CD2274E64C40042AC29 /* Location+CoreDataProperties.swift */,
+				7D6E73AE27536D3000BA5E23 /* CoreData */,
 				7D8CCF6D273ED3E400A7E277 /* MyLocation */,
 				7D8CCF6C273ED3E400A7E277 /* Products */,
 			);
