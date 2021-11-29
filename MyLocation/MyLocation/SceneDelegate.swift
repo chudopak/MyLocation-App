@@ -72,6 +72,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		if let tabBarViewControllers = tabBarController.viewControllers {
 			let currentLocationViewController = tabBarViewControllers[0] as! CurrentLocationViewController
 			currentLocationViewController.managedObjectContext = managedObjectContext
+			
+			let navController = tabBarViewControllers[1] as! UINavigationController
+			let controller2 = navController.viewControllers.first as! LocationViewController
+			controller2.managedObjectContext = managedObjectContext
 		}
 	}
 	
