@@ -24,6 +24,18 @@ class LocationDetailsViewController : UITableViewController {
 	var 		category = CategoryCell(name: "No Category")
 	
 	var			managedObjectContext: NSManagedObjectContext!
+	var			locationToEdit: Location? {
+		didSet {
+			if let editLocation = locationToEdit {
+				descriptionText = editLocation.locationDescription
+				category.name = editLocation.category
+				date = editLocation.date
+				location = CLLocationCoordinate2D(latitude: editLocation.latitude, longitude: editLocation.longitude)
+				placemark = editLocation.placemark
+			}
+		}
+	}
+	var			descriptionText = ""
 	
 	var			date = Date()
 	
@@ -47,6 +59,12 @@ class LocationDetailsViewController : UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		if let editLocation = locationToEdit {
+			title = "Edit Location"
+		}
+		descriptionTextView.text = descriptionText
+
 		addressLabel.translatesAutoresizingMaskIntoConstraints = false
 		_updateLabels()
 		
@@ -140,7 +158,9 @@ class LocationDetailsViewController : UITableViewController {
 	}
 	
 	private func _updateDescriptionAndCategoryName() {
-		descriptionTextView.text = ""
+		if (locationToEdit == nil) {
+			descriptionTextView.text = ""
+		}
 		categoryLabel.text = category.name
 	}
 	
@@ -170,9 +190,15 @@ class LocationDetailsViewController : UITableViewController {
 
 	@IBAction func done(_ sender: UIBarButtonItem) {
 		let hudView = HudView.hud(inView: navigationController!.view, animated: true)
-		hudView.text = "Tagged"
 		
-		let coreDataLocation = Location(context: managedObjectContext)
+		let coreDataLocation: Location
+		if let tmp = locationToEdit {
+			hudView.text = "Updated"
+			coreDataLocation = tmp
+		} else {
+			hudView.text = "Tagged"
+			coreDataLocation = Location(context: managedObjectContext)
+		}
 
 		coreDataLocation.locationDescription = descriptionTextView.text
 		coreDataLocation.category = category.name

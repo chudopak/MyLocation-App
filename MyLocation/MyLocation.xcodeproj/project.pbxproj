@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D16C15427561035007A5219 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D16C15327561035007A5219 /* LocationCell.swift */; };
 		7D1D52CD274BA11000724AA9 /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1D52CC274BA11000724AA9 /* HudView.swift */; };
 		7D1D52CF274BB8A800724AA9 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1D52CE274BB8A800724AA9 /* Functions.swift */; };
 		7D6FF3FB27465AF3007EA2B8 /* LocationDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6FF3FA27465AF3007EA2B8 /* LocationDetailsViewController.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7D16C15327561035007A5219 /* LocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
 		7D1D52CC274BA11000724AA9 /* HudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HudView.swift; sourceTree = "<group>"; };
 		7D1D52CE274BB8A800724AA9 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		7D6FF3FA27465AF3007EA2B8 /* LocationDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailsViewController.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				7D8CCF82273ED6DA00A7E277 /* CurrentLocationViewController.swift */,
 				7D8CCF74273ED3E400A7E277 /* Main.storyboard */,
 				7D8B623E2754EF6700546663 /* LocationViewController.swift */,
+				7D16C15327561035007A5219 /* LocationCell.swift */,
 				7D6FF3FA27465AF3007EA2B8 /* LocationDetailsViewController.swift */,
 				7D1D52CE274BB8A800724AA9 /* Functions.swift */,
 				7D1D52CC274BA11000724AA9 /* HudView.swift */,
@@ -179,6 +182,7 @@
 				7DAC1CD0274E4C0F0042AC29 /* DataModel.xcdatamodeld in Sources */,
 				7D8CCF73273ED3E400A7E277 /* TabBarController.swift in Sources */,
 				7D1D52CF274BB8A800724AA9 /* Functions.swift in Sources */,
+				7D16C15427561035007A5219 /* LocationCell.swift in Sources */,
 				7D6FF3FB27465AF3007EA2B8 /* LocationDetailsViewController.swift in Sources */,
 				7DB8F6E727491CF30070564E /* Utils.swift in Sources */,
 				7D1D52CD274BA11000724AA9 /* HudView.swift in Sources */,
