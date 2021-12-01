@@ -12,8 +12,6 @@ import CoreLocation
 
 class LocationViewController : UITableViewController {
 	
-	var	locations = [Location]()
-	
 	lazy var fetchedResultsController: NSFetchedResultsController<Location> = {
 		let fetchRequest = NSFetchRequest<Location>()
 		
@@ -36,9 +34,13 @@ class LocationViewController : UITableViewController {
 	
 	var	managedObjectContext: NSManagedObjectContext!
 	
+
+
 	deinit {
 		fetchedResultsController.delegate = nil
 	}
+	
+	
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -54,11 +56,13 @@ class LocationViewController : UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
 		let sectionInfo = fetchedResultsController.sections![section]
 		return (sectionInfo.numberOfObjects)
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
 		let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell",
 												 for: indexPath) as! LocationCell
 		
@@ -72,6 +76,7 @@ class LocationViewController : UITableViewController {
 	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
 		if (segue.identifier == "EditLocation") {
 			let navigationController = segue.destination as! UINavigationController
 			let controller = navigationController.topViewController as! LocationDetailsViewController
@@ -92,6 +97,7 @@ extension LocationViewController : NSFetchedResultsControllerDelegate {
 	}
 	
 	func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+
 		switch type {
 		case .insert:
 			print("*** NSFetchedResultsChangeInsert (object)")
