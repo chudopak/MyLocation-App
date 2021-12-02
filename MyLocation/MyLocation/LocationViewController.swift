@@ -45,6 +45,19 @@ class LocationViewController : UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		_performFetch()
+		navigationItem.rightBarButtonItem = editButtonItem
+		navigationItem.rightBarButtonItem?.title = "🔏"
+		editButtonItem.setBackgroundImage(UIImage(named: "CloseButton"), for: .application, barMetrics: .default)
+	}
+	override func setEditing(_ editing: Bool, animated: Bool) {
+		super.setEditing(editing,animated:animated)
+		if (isEditing) {
+			editButtonItem.title = "👍"
+
+		}
+		else {
+			editButtonItem.title = "🔏"
+		}
 	}
 	
 	private func _performFetch() {
@@ -73,6 +86,18 @@ class LocationViewController : UITableViewController {
 	
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return (58)
+	}
+	
+	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+		if (editingStyle == .delete) {
+			let locationObj = fetchedResultsController.object(at: indexPath)
+			managedObjectContext.delete(locationObj)
+			do {
+				try managedObjectContext.save()
+			} catch {
+				fatalCoreDataError(error)
+			}
+		}
 	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
