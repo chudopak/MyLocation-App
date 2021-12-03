@@ -18,15 +18,17 @@ class LocationViewController : UITableViewController {
 		let entity = Location.entity()
 		fetchRequest.entity = entity
 		
-		let sortDescriptor = NSSortDescriptor(key: "date",
-											  ascending: true)
-		fetchRequest.sortDescriptors = [sortDescriptor]
+		let sort1 = NSSortDescriptor(key: "category",
+									 ascending: true)
+		let sort2 = NSSortDescriptor(key: "date",
+									 ascending: true)
+		fetchRequest.sortDescriptors = [sort1, sort2]
 		
 		fetchRequest.fetchBatchSize = 20
 		
 		let fetchResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
 																managedObjectContext: self.managedObjectContext,
-																sectionNameKeyPath: nil,
+																sectionNameKeyPath: "category",
 																cacheName: "Location")
 		fetchResultsController.delegate = self
 		return (fetchResultsController)
@@ -47,13 +49,12 @@ class LocationViewController : UITableViewController {
 		_performFetch()
 		navigationItem.rightBarButtonItem = editButtonItem
 		navigationItem.rightBarButtonItem?.title = "🔏"
-		editButtonItem.setBackgroundImage(UIImage(named: "CloseButton"), for: .application, barMetrics: .default)
+//		editButtonItem.setBackgroundImage(UIImage(named: "CloseButton"), for: .application, barMetrics: .default)
 	}
 	override func setEditing(_ editing: Bool, animated: Bool) {
 		super.setEditing(editing,animated:animated)
 		if (isEditing) {
 			editButtonItem.title = "👍"
-
 		}
 		else {
 			editButtonItem.title = "🔏"
@@ -66,6 +67,15 @@ class LocationViewController : UITableViewController {
 		} catch {
 			fatalCoreDataError(error)
 		}
+	}
+	
+	override func numberOfSections(in tableView: UITableView) -> Int {
+		return fetchedResultsController.sections!.count
+	}
+	
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		let sectionInfo = fetchedResultsController.sections![section]
+		return (sectionInfo.name)
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
