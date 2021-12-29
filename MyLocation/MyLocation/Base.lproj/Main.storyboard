@@ -483,6 +483,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="8w3-kh-XCg" id="g0e-Q2-fC6"/>
+                        <segue destination="p17-oX-OKp" kind="presentation" identifier="EditLocation" modalPresentationStyle="fullScreen" id="boc-ti-3HD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PFJ-ej-q6O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -510,7 +511,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="r4O-N5-oEv"/>
+        <segue reference="boc-ti-3HD"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="labelColor">

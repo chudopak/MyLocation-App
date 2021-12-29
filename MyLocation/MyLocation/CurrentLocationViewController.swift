@@ -82,28 +82,26 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 		present(alert, animated: true, completion: nil)
 	}
 	
+	private func _stopLocationManager() {
+		if updatingLocation {
+			locationManager.stopUpdatingLocation()
+			locationManager.delegate = nil
+			updatingLocation = false
+			if let timer = timer {
+				timer.invalidate()
+			}
+		}
+	}
 	
-	
-	private func _string(from placemark: CLPlacemark) -> String {
-		var str1 = ""
-		str1.reserveCapacity(30)
-		if let s = placemark.subThoroughfare {					//additional street info
-			str1 += s + " "
+	private func _startLocationManager() {
+		if CLLocationManager.locationServicesEnabled() {
+			locationManager.delegate = self
+			locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+			locationManager.startUpdatingLocation()
+			updatingLocation = true
+			weak var weakSelf = self
+			timer = Timer.scheduledTimer(timeInterval: 60, target: weakSelf!, selector: #selector(_didTimeOut), userInfo: nil, repeats: false)
 		}
-		if let s = placemark.thoroughfare {						//street address
-			str1 += s
-		}
-		str1 += "\n"
-		if let s = placemark.locality {							//City
-			str1 += s + " "
-		}
-		if let s = placemark.administrativeArea {				//province state
-			str1 += s + " "
-		}
-		if let s = placemark.postalCode {
-			str1 += s
-		}
-		return (str1)
 	}
 	
 	private func _getMessageLabelText() -> String {
@@ -138,6 +136,28 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 		return (addressMessage)
 	}
 	
+	private func _string(from placemark: CLPlacemark) -> String {
+		var str1 = ""
+		str1.reserveCapacity(30)
+		if let s = placemark.subThoroughfare {					//additional street info
+			str1 += s + " "
+		}
+		if let s = placemark.thoroughfare {						//street address
+			str1 += s
+		}
+		str1 += "\n"
+		if let s = placemark.locality {							//City
+			str1 += s + " "
+		}
+		if let s = placemark.administrativeArea {				//province state
+			str1 += s + " "
+		}
+		if let s = placemark.postalCode {
+			str1 += s
+		}
+		return (str1)
+	}
+	
 	private func _updateLabels() {
 		if let location = location {
 			latitudeLabel.text = String(format: "%.6f", location.coordinate.latitude)
@@ -169,28 +189,6 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 			_configureGetButtonText()
 		}
 	}
-
-	private func _startLocationManager() {
-		if CLLocationManager.locationServicesEnabled() {
-			locationManager.delegate = self
-			locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-			locationManager.startUpdatingLocation()
-			updatingLocation = true
-			weak var weakSelf = self
-			timer = Timer.scheduledTimer(timeInterval: 60, target: weakSelf!, selector: #selector(_didTimeOut), userInfo: nil, repeats: false)
-		}
-	}
-	
-	private func _stopLocationManager() {
-		if updatingLocation {
-			locationManager.stopUpdatingLocation()
-			locationManager.delegate = nil
-			updatingLocation = false
-			if let timer = timer {
-				timer.invalidate()
-			}
-		}
-	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if (segue.identifier == "ShowTagLocation") {
@@ -204,7 +202,6 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 	
 	//MARK: - CLLocationManagerDelegate
 	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-//		print("didFailWitherror \(error)")
 		
 		//return because app loking for location but can't find it FOR NOW but it doesn't mean's all is lost
 		if (error as NSError).code == CLError.locationUnknown.rawValue {
@@ -221,7 +218,6 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 		performingReverseGeocoding = true
 		geocoder.reverseGeocodeLocation(newLocation, completionHandler: {
 			[weak self] placemark, error in
-//			print("***Found placemarks: \(String(describing: placemark)), error: \(String(describing: error))")
 			self?.lastGeocodingError = error
 			if error == nil, let p = placemark, !p.isEmpty{
 				self?.placemark = p.last!
@@ -231,6 +227,27 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 			self?.performingReverseGeocoding = false
 			self?._updateLabels()
 		})
+	}
+	
+	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+		let newLocation = locations.last!
+		
+		if (newLocation.timestamp.timeIntervalSinceNow < -5) {
+			return
+		}
+		if (newLocation.horizontalAccuracy) < 0 {
+			return
+		}
+		var distance = CLLocationDistance(Double.greatestFiniteMagnitude)
+		if let location = location {
+			distance = newLocation.distance(from: location)
+		}
+		if (location == nil || location!.horizontalAccuracy > newLocation.horizontalAccuracy
+				|| newLocation.horizontalAccuracy <= locationManager.desiredAccuracy) {
+			_updatingLocation(for: newLocation, with: distance)
+		} else if (distance < 1) {
+			_stoppingIfNoAccuracyImprovementForTenSeconds(newLocation: newLocation)
+		}
 	}
 	
 	private func _updatingLocation(for newLocation: CLLocation, with distance: CLLocationDistance) {
@@ -253,33 +270,9 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 	private func _stoppingIfNoAccuracyImprovementForTenSeconds(newLocation: CLLocation) {
 		let timeInterval = newLocation.timestamp.timeIntervalSince(location!.timestamp)
 		if (timeInterval > 10) {
-//			print("***Force done!")
 			_stopLocationManager()
 			_updateLabels()
 			_configureGetButtonText()
-		}
-	}
-	
-	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-		let newLocation = locations.last!
-//		print("didUpdateLocations \(String(describing: newLocation))")
-//		print("Accuracy", newLocation.horizontalAccuracy)
-		
-		if (newLocation.timestamp.timeIntervalSinceNow < -5) {
-			return
-		}
-		if (newLocation.horizontalAccuracy) < 0 {
-			return
-		}
-		var distance = CLLocationDistance(Double.greatestFiniteMagnitude)
-		if let location = location {
-			distance = newLocation.distance(from: location)
-		}
-		if (location == nil || location!.horizontalAccuracy > newLocation.horizontalAccuracy
-				|| newLocation.horizontalAccuracy <= locationManager.desiredAccuracy) {
-			_updatingLocation(for: newLocation, with: distance)
-		} else if (distance < 1) {
-			_stoppingIfNoAccuracyImprovementForTenSeconds(newLocation: newLocation)
 		}
 	}
 }

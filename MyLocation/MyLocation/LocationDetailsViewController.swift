@@ -27,17 +27,17 @@ class LocationDetailsViewController : UITableViewController {
 	var			locationToEdit: Location? {
 		didSet {
 			if let editLocation = locationToEdit {
-				descriptionText = editLocation.locationDescription
+				_descriptionText = editLocation.locationDescription
 				category.name = editLocation.category
-				date = editLocation.date
+				_date = editLocation.date
 				location = CLLocationCoordinate2D(latitude: editLocation.latitude, longitude: editLocation.longitude)
 				placemark = editLocation.placemark
 			}
 		}
 	}
-	var			descriptionText = ""
+	private var			_descriptionText = ""
 	
-	var			date = Date()
+	private var			_date = Date()
 	
 	
 	@IBOutlet weak var	addressCellView: UIView!
@@ -47,12 +47,13 @@ class LocationDetailsViewController : UITableViewController {
 	@IBOutlet weak var	longitudeLabel: UILabel!
 	@IBOutlet weak var	dateLabel: UILabel!
 	
-	let addressLabel: UILabel = {
+	private lazy var _addressLabel: UILabel = {
 		let label = UILabel()
 		label.font = UIFont.systemFont(ofSize: 17)
 		label.lineBreakMode = NSLineBreakMode.byWordWrapping
 		label.numberOfLines = 0
 		label.textAlignment = .right
+		label.translatesAutoresizingMaskIntoConstraints = false
 		return (label)
 	}()
 	
@@ -60,12 +61,11 @@ class LocationDetailsViewController : UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		if let editLocation = locationToEdit {
+		if locationToEdit != nil {
 			title = "Edit Location"
 		}
-		descriptionTextView.text = descriptionText
+		descriptionTextView.text = _descriptionText
 
-		addressLabel.translatesAutoresizingMaskIntoConstraints = false
 		_updateLabels()
 		
 		let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
@@ -91,12 +91,12 @@ class LocationDetailsViewController : UITableViewController {
 		if (indexPath.section == 0 && indexPath.row == 0) {
 			return (88)
 		} else if (indexPath.section == 2 && indexPath.row == 2) {
-			addressLabel.frame.size = CGSize(width: view.bounds.size.width - 150, height: 1000)
-			addressLabel.sizeToFit()
-			addressLabel.frame.origin.x = view.frame.size.width - addressLabel.frame.size.width - 20
-			addressLabel.frame.origin.y = 10
-			addressCellView.addSubview(addressLabel)
-			return (addressLabel.frame.size.height + 20)
+			_addressLabel.frame.size = CGSize(width: view.bounds.size.width - 150, height: 1000)
+			_addressLabel.sizeToFit()
+			_addressLabel.frame.origin.x = view.frame.size.width - _addressLabel.frame.size.width - 20
+			_addressLabel.frame.origin.y = 10
+			addressCellView.addSubview(_addressLabel)
+			return (_addressLabel.frame.size.height + 20)
 		} else {
 			return (44)
 		}
@@ -147,14 +147,14 @@ class LocationDetailsViewController : UITableViewController {
 			if let s = placemark.postalCode {
 				str += s
 			}
-			addressLabel.text = str
+			_addressLabel.text = str
 		} else {
-			addressLabel.text = "No Address Provided"
+			_addressLabel.text = "No Address Provided"
 		}
 	}
 	
 	private func _updateDate() {
-		dateLabel.text = dateFormatter.string(from: date)
+		dateLabel.text = dateFormatter.string(from: _date)
 	}
 	
 	private func _updateDescriptionAndCategoryName() {
@@ -204,7 +204,7 @@ class LocationDetailsViewController : UITableViewController {
 		coreDataLocation.category = category.name
 		coreDataLocation.latitude = location?.latitude ?? 0.0
 		coreDataLocation.longitude = location?.longitude ?? 0.0
-		coreDataLocation.date = date
+		coreDataLocation.date = _date
 		coreDataLocation.placemark = placemark
 		
 		

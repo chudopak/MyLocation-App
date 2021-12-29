@@ -35,14 +35,10 @@ class LocationViewController : UITableViewController {
 	} ()
 	
 	var	managedObjectContext: NSManagedObjectContext!
-	
-
 
 	deinit {
 		fetchedResultsController.delegate = nil
 	}
-	
-	
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -51,6 +47,7 @@ class LocationViewController : UITableViewController {
 		navigationItem.rightBarButtonItem?.title = "🔏"
 //		editButtonItem.setBackgroundImage(UIImage(named: "CloseButton"), for: .application, barMetrics: .default)
 	}
+
 	override func setEditing(_ editing: Bool, animated: Bool) {
 		super.setEditing(editing,animated:animated)
 		if (isEditing) {
@@ -79,7 +76,6 @@ class LocationViewController : UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
 		let sectionInfo = fetchedResultsController.sections![section]
 		return (sectionInfo.numberOfObjects)
 	}
