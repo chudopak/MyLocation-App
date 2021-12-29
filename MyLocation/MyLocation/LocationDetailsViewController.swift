@@ -39,6 +39,19 @@ class LocationDetailsViewController : UITableViewController {
 	
 	private var			_date = Date()
 	
+	private var			_image: UIImage? {
+		didSet {
+			if let image = _image {
+				imageView.isHidden = false
+				imageView.image = image
+				addPhotoLabel.text = ""
+			} else {
+				imageView.isHidden = true
+				addPhotoLabel.text = "Add Photo"
+			}
+		}
+	}
+	
 	
 	@IBOutlet weak var	addressCellView: UIView!
 	@IBOutlet weak var	descriptionTextView: UITextView!
@@ -46,6 +59,8 @@ class LocationDetailsViewController : UITableViewController {
 	@IBOutlet weak var	latitudeLabel: UILabel!
 	@IBOutlet weak var	longitudeLabel: UILabel!
 	@IBOutlet weak var	dateLabel: UILabel!
+	@IBOutlet weak var	imageView: UIImageView!
+	@IBOutlet weak var	addPhotoLabel: UILabel!
 	
 	private lazy var _addressLabel: UILabel = {
 		let label = UILabel()
@@ -113,8 +128,11 @@ class LocationDetailsViewController : UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: false)
 		if (indexPath.section == 0 && indexPath.row == 0) {
 			descriptionTextView.becomeFirstResponder()
+		} else if (indexPath.section == 1 && indexPath.row == 0) {
+			pickPhoto()
 		}
 	}
 	
@@ -216,5 +234,65 @@ class LocationDetailsViewController : UITableViewController {
 		} catch {
 			fatalCoreDataError(error)
 		}
+	}
+}
+
+extension LocationDetailsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+	
+	func choosePhotoFromLibrary() {
+		let imagePicker = UIImagePickerController()
+		imagePicker.sourceType = .photoLibrary
+		imagePicker.delegate = self
+		imagePicker.allowsEditing = true
+		present(imagePicker, animated: true, completion: nil)
+	}
+	
+	func takeNewPhoto() {
+		let imagePicker = UIImagePickerController()
+		imagePicker.sourceType = .camera
+		imagePicker.delegate = self
+		imagePicker.allowsEditing = true
+		present(imagePicker, animated: true, completion: nil)
+	}
+	
+	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+		
+		_image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage
+		
+		dismiss(animated: true, completion: nil)
+	}
+	
+	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+		dismiss(animated: true, completion: nil)
+	}
+	
+	func pickPhoto() {
+		if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
+			showPhotoMenu()
+		} else {
+			choosePhotoFromLibrary()
+		}
+	}
+	
+	func showPhotoMenu() {
+		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		
+		let actCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+		
+		alert.addAction(actCancel)
+		
+		let actPhoto = UIAlertAction(title: "Take Photo", style: .default, handler: { _ in
+			self.takeNewPhoto()
+		})
+		
+		alert.addAction(actPhoto)
+		
+		let actLibrary = UIAlertAction(title: "Chose From Library", style: .default, handler: { _ in
+			self.choosePhotoFromLibrary()
+		})
+		
+		alert.addAction(actLibrary)
+		
+		present(alert, animated: true, completion: nil)
 	}
 }

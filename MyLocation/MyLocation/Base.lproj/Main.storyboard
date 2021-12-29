@@ -166,6 +166,10 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XIa-bP-E3T">
+                                                    <rect key="frame" x="134" y="11" width="196" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -283,10 +287,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addPhotoLabel" destination="p2l-rn-bBd" id="Zhm-qd-9oW"/>
                         <outlet property="addressCellView" destination="Gaq-La-shq" id="WoI-vN-u4F"/>
                         <outlet property="categoryLabel" destination="Ztl-AI-5xN" id="JEc-MC-EN8"/>
                         <outlet property="dateLabel" destination="OFr-53-ccp" id="lPL-fQ-dKA"/>
                         <outlet property="descriptionTextView" destination="XtO-im-jla" id="Isc-UZ-6t5"/>
+                        <outlet property="imageView" destination="XIa-bP-E3T" id="Bx0-9r-JhS"/>
                         <outlet property="latitudeLabel" destination="Hfz-VL-Nd6" id="QRK-uw-5By"/>
                         <outlet property="longitudeLabel" destination="WTF-xR-RC4" id="UyD-jv-pgC"/>
                     </connections>
