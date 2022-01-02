@@ -61,21 +61,13 @@ class LocationDetailsViewController : UITableViewController {
 	@IBOutlet weak var	dateLabel: UILabel!
 	@IBOutlet weak var	imageView: UIImageView!
 	@IBOutlet weak var	addPhotoLabel: UILabel!
-	
-	private lazy var _addressLabel: UILabel = {
-		let label = UILabel()
-		label.font = UIFont.systemFont(ofSize: 17)
-		label.lineBreakMode = NSLineBreakMode.byWordWrapping
-		label.numberOfLines = 0
-		label.textAlignment = .right
-		label.translatesAutoresizingMaskIntoConstraints = false
-		return (label)
-	}()
+	@IBOutlet weak var	addressLabel: UILabel!
 	
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		addressLabel.numberOfLines = 0
 		if locationToEdit != nil {
 			title = "Edit Location"
 		}
@@ -86,6 +78,15 @@ class LocationDetailsViewController : UITableViewController {
 		let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
 		gestureRecognizer.cancelsTouchesInView = false
 		tableView.addGestureRecognizer(gestureRecognizer)
+	}
+	
+	func textSize(font: UIFont, text: String, width: CGFloat = UIScreen.main.bounds.width * 0.7, height: CGFloat = .greatestFiniteMagnitude) -> CGSize {
+		let label = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: height))
+		label.numberOfLines = 0
+		label.font = font
+		label.text = text
+		label.sizeToFit()
+		return label.frame.size
 	}
 	
 	@objc func hideKeyboard(_ gestureRecognizer: UIGestureRecognizer) {
@@ -106,12 +107,11 @@ class LocationDetailsViewController : UITableViewController {
 		if (indexPath.section == 0 && indexPath.row == 0) {
 			return (88)
 		} else if (indexPath.section == 2 && indexPath.row == 2) {
-			_addressLabel.frame.size = CGSize(width: view.bounds.size.width - 150, height: 1000)
-			_addressLabel.sizeToFit()
-			_addressLabel.frame.origin.x = view.frame.size.width - _addressLabel.frame.size.width - 20
-			_addressLabel.frame.origin.y = 10
-			addressCellView.addSubview(_addressLabel)
-			return (_addressLabel.frame.size.height + 20)
+			addressLabel.frame.size = textSize(font: UIFont.systemFont(ofSize: 17), text: addressLabel.text!)
+			print()
+			print(addressLabel.bounds.size.height)
+			print()
+			return (addressLabel.frame.size.height + 26)
 		} else {
 			return (44)
 		}
@@ -165,9 +165,9 @@ class LocationDetailsViewController : UITableViewController {
 			if let s = placemark.postalCode {
 				str += s
 			}
-			_addressLabel.text = str
+			addressLabel.text = str
 		} else {
-			_addressLabel.text = "No Address Provided"
+			addressLabel.text = "No Address Provided"
 		}
 	}
 	
