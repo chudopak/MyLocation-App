@@ -39,6 +39,7 @@ class LocationDetailsViewController : UITableViewController {
 	
 	private var			_date = Date()
 	
+	private var			_isImageChanged = false
 	private var			_image: UIImage? {
 		didSet {
 			if let image = _image {
@@ -75,8 +76,13 @@ class LocationDetailsViewController : UITableViewController {
 		
 		_listenForBackgroundNotification()
 		addressLabel.numberOfLines = 0
-		if locationToEdit != nil {
+		if let location = locationToEdit {
 			title = "Edit Location"
+			if location.hasPhoto {
+				if let theImage = location.photoImage {
+					_image = theImage
+				}
+			}
 		}
 		descriptionTextView.text = _descriptionText
 
@@ -116,7 +122,6 @@ class LocationDetailsViewController : UITableViewController {
 		} else if (indexPath.section == 1 && indexPath.row == 0) {
 			if let image = _image {
 				let ratio = image.size.height / image.size.width
-				print(tableView.layoutMargins.left, tableView.layoutMargins.right)
 				let height = (UIScreen.main.bounds.width - tableView.layoutMargins.left - tableView.layoutMargins.right)  * ratio
 				return (height)
 			} else {
@@ -229,6 +234,21 @@ class LocationDetailsViewController : UITableViewController {
 		} else {
 			hudView.text = "Tagged"
 			coreDataLocation = Location(context: managedObjectContext)
+			coreDataLocation.photoID = nil
+		}
+		
+		if _isImageChanged, let image = _image {
+			if (!coreDataLocation.hasPhoto) {
+				coreDataLocation.photoID = Location.nextPhotoID() as NSNumber
+			}
+			if let data = image.jpegData(compressionQuality: 0.5) {
+				do {
+					print("WRITING")
+					try data.write(to: coreDataLocation.photoURL, options: .atomic)
+				} catch {
+					print("Error writing file: \(error)")
+				}
+			}
 		}
 
 		coreDataLocation.locationDescription = descriptionTextView.text
@@ -283,6 +303,7 @@ extension LocationDetailsViewController: UIImagePickerControllerDelegate, UINavi
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 		
 		_image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage
+		_isImageChanged = true
 		
 		dismiss(animated: true, completion: nil)
 	}

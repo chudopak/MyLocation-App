@@ -97,6 +97,7 @@ class LocationViewController : UITableViewController {
 	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if (editingStyle == .delete) {
 			let locationObj = fetchedResultsController.object(at: indexPath)
+			locationObj.removePhotFile()
 			managedObjectContext.delete(locationObj)
 			do {
 				try managedObjectContext.save()

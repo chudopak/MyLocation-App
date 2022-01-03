@@ -24,6 +24,7 @@
 		7DAC1CD0274E4C0F0042AC29 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7DAC1CCE274E4C0F0042AC29 /* DataModel.xcdatamodeld */; };
 		7DAC1CD3274E64C40042AC29 /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DAC1CD1274E64C40042AC29 /* Location+CoreDataClass.swift */; };
 		7DAC1CD4274E64C40042AC29 /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DAC1CD2274E64C40042AC29 /* Location+CoreDataProperties.swift */; };
+		7DB733FC27834BB600E541AD /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB733FB27834BB600E541AD /* UIImage+Resize.swift */; };
 		7DB8F6E5274904270070564E /* CategoryPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB8F6E4274904270070564E /* CategoryPickerViewController.swift */; };
 		7DB8F6E727491CF30070564E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB8F6E627491CF30070564E /* Utils.swift */; };
 /* End PBXBuildFile section */
@@ -48,6 +49,7 @@
 		7DAC1CCF274E4C0F0042AC29 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		7DAC1CD1274E64C40042AC29 /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7DAC1CD2274E64C40042AC29 /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		7DB733FB27834BB600E541AD /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		7DB8F6E4274904270070564E /* CategoryPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPickerViewController.swift; sourceTree = "<group>"; };
 		7DB8F6E627491CF30070564E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -110,6 +112,7 @@
 				7D56A50D275A1A7900F1576E /* MapViewController.swift */,
 				7D8B623E2754EF6700546663 /* LocationViewController.swift */,
 				7D16C15327561035007A5219 /* LocationCell.swift */,
+				7DB733FB27834BB600E541AD /* UIImage+Resize.swift */,
 				7D6FF3FA27465AF3007EA2B8 /* LocationDetailsViewController.swift */,
 				7D1D52CE274BB8A800724AA9 /* Functions.swift */,
 				7D1D52CC274BA11000724AA9 /* HudView.swift */,
@@ -206,6 +209,7 @@
 				7DAC1CD4274E64C40042AC29 /* Location+CoreDataProperties.swift in Sources */,
 				7D8CCF6F273ED3E400A7E277 /* AppDelegate.swift in Sources */,
 				7DAC1CD3274E64C40042AC29 /* Location+CoreDataClass.swift in Sources */,
+				7DB733FC27834BB600E541AD /* UIImage+Resize.swift in Sources */,
 				7D56A50E275A1A7900F1576E /* MapViewController.swift in Sources */,
 				7D8CCF71273ED3E400A7E277 /* SceneDelegate.swift in Sources */,
 			);
