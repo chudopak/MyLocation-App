@@ -35,6 +35,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		_setColors()
 		_updateLabels()
 		_configureGetButtonText()
 	}
@@ -137,25 +138,20 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 	}
 	
 	private func _string(from placemark: CLPlacemark) -> String {
-		var str1 = ""
-		str1.reserveCapacity(30)
-		if let s = placemark.subThoroughfare {					//additional street info
-			str1 += s + " "
-		}
-		if let s = placemark.thoroughfare {						//street address
-			str1 += s
-		}
-		str1 += "\n"
-		if let s = placemark.locality {							//City
-			str1 += s + " "
-		}
-		if let s = placemark.administrativeArea {				//province state
-			str1 += s + " "
-		}
-		if let s = placemark.postalCode {
-			str1 += s
-		}
-		return (str1)
+		
+		var line1 = ""
+		line1.reserveCapacity(20)
+		line1.add(text: placemark.subThoroughfare, separatedBy: " ")
+		line1.add(text: placemark.thoroughfare)
+		
+		var line2 = ""
+		line2.reserveCapacity(20)
+		line2.add(text: placemark.locality, separatedBy: "")
+		line2.add(text: placemark.administrativeArea, separatedBy: " ")
+		line2.add(text: placemark.postalCode)
+		line1.add(text: line2, separatedBy: "\n")
+		
+		return (line1)
 	}
 	
 	private func _updateLabels() {
@@ -273,6 +269,43 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 			_stopLocationManager()
 			_updateLabels()
 			_configureGetButtonText()
+		}
+	}
+	
+	private func _setColors() {
+		view.backgroundColor = UIColor { tc in
+			switch tc.userInterfaceStyle {
+			case .dark:
+				return (darkThemeBackgroundColor)
+			default:
+				return (lightThemeBackgroundColor)
+			}
+		}
+		view.tintColor = UIColor { tc in
+			switch tc.userInterfaceStyle {
+			case .dark:
+				return (darkThemeTintColor)
+			default:
+				return (lightThemeTintColor)
+			}
+		}
+		
+		tagButton.tintColor = UIColor { tc in
+			switch tc.userInterfaceStyle {
+			case .dark:
+				return (darkThemeTintColorYellow)
+			default:
+				return (lightThemeTintColorPurple)
+			}
+		}
+		
+		getButton.tintColor = UIColor { tc in
+			switch tc.userInterfaceStyle {
+			case .dark:
+				return (darkThemeTintColorYellow)
+			default:
+				return (lightThemeTintColorPurple)
+			}
 		}
 	}
 }

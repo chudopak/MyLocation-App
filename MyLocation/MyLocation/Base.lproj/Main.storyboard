@@ -67,8 +67,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Fg-Us-nmX">
-                                <rect key="frame" x="146" y="350" width="83" height="30"/>
+                                <rect key="frame" x="139" y="350" width="99" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <state key="normal" title="Tag location"/>
                                 <connections>
                                     <segue destination="p17-oX-OKp" kind="presentation" identifier="ShowTagLocation" modalPresentationStyle="fullScreen" id="w7n-Ab-BzU"/>
@@ -304,8 +305,10 @@
                         <outlet property="addressCellView" destination="Gaq-La-shq" id="WoI-vN-u4F"/>
                         <outlet property="addressLabel" destination="jgV-3s-ofn" id="VOc-dw-Ngn"/>
                         <outlet property="categoryLabel" destination="Ztl-AI-5xN" id="JEc-MC-EN8"/>
+                        <outlet property="closeButton" destination="a7K-is-Itn" id="302-8r-8iK"/>
                         <outlet property="dateLabel" destination="OFr-53-ccp" id="lPL-fQ-dKA"/>
                         <outlet property="descriptionTextView" destination="XtO-im-jla" id="Isc-UZ-6t5"/>
+                        <outlet property="doneButton" destination="F6e-1U-Omw" id="fms-Dg-c90"/>
                         <outlet property="imageView" destination="XIa-bP-E3T" id="Bx0-9r-JhS"/>
                         <outlet property="latitudeLabel" destination="Hfz-VL-Nd6" id="QRK-uw-5By"/>
                         <outlet property="longitudeLabel" destination="WTF-xR-RC4" id="UyD-jv-pgC"/>
@@ -541,7 +544,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="r4O-N5-oEv"/>
+        <segue reference="w7n-Ab-BzU"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="labelColor">

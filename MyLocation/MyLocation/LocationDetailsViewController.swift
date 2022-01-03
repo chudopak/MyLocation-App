@@ -65,6 +65,8 @@ class LocationDetailsViewController : UITableViewController {
 	@IBOutlet weak var	imageView: UIImageView!
 	@IBOutlet weak var	addPhotoLabel: UILabel!
 	@IBOutlet weak var	addressLabel: UILabel!
+	@IBOutlet weak var	doneButton: UIBarButtonItem!
+	@IBOutlet weak var	closeButton: UIBarButtonItem!
 
 	deinit {
 //		print("*** deinit \(self)")
@@ -75,6 +77,8 @@ class LocationDetailsViewController : UITableViewController {
 		super.viewDidLoad()
 		
 		_listenForBackgroundNotification()
+		_setColors()
+		
 		addressLabel.numberOfLines = 0
 		if let location = locationToEdit {
 			title = "Edit Location"
@@ -166,24 +170,15 @@ class LocationDetailsViewController : UITableViewController {
 	
 	private func _updateAddress() {
 		if let placemark = placemark {
-			var str = ""
-			str.reserveCapacity(30)
-			if let s = placemark.subThoroughfare {					//additional street info
-				str += s + " "
-			}
-			if let s = placemark.thoroughfare {						//street address
-				str += s + " "
-			}
-			if let s = placemark.locality {							//City
-				str += s + " "
-			}
-			if let s = placemark.administrativeArea {				//province state
-				str += s + " "
-			}
-			if let s = placemark.postalCode {
-				str += s
-			}
-			addressLabel.text = str
+			var line = ""
+			line.reserveCapacity(40)
+			line.add(text: placemark.subThoroughfare)
+			line.add(text: placemark.thoroughfare, separatedBy: " ")
+			line.add(text: placemark.locality, separatedBy: ", ")
+			line.add(text: placemark.administrativeArea, separatedBy: ", ")
+			line.add(text: placemark.postalCode, separatedBy: " ")
+			line.add(text: placemark.country, separatedBy: ", ")
+			addressLabel.text = line
 		} else {
 			addressLabel.text = "No Address Provided"
 		}
@@ -277,6 +272,26 @@ class LocationDetailsViewController : UITableViewController {
 			if let weakSelf = self {
 				weakSelf.dismiss(animated: false, completion: nil)
 				weakSelf.descriptionTextView.resignFirstResponder()
+			}
+		}
+	}
+	
+	private func _setColors() {
+		doneButton.tintColor = UIColor { tc in
+			switch tc.userInterfaceStyle {
+			case .dark:
+				return (darkThemeTintColorYellow)
+			default:
+				return (lightThemeTintColorPurple)
+			}
+		}
+		
+		closeButton.tintColor = UIColor { tc in
+			switch tc.userInterfaceStyle {
+			case .dark:
+				return (darkThemeTintColorYellow)
+			default:
+				return (lightThemeTintColorPurple)
 			}
 		}
 	}

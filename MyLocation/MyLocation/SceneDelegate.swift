@@ -31,6 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		// If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
 		// This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 		guard let _ = (scene as? UIWindowScene) else { return }
+		_setColorsForBars()
 		_passManagedObjectContextToCurrentLocationViewController()
 		listenForFatalCoreDataNotifications()
 		print(applicationDocumentDirectory)
@@ -108,6 +109,44 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			return (presentedViewController)
 		} else {
 			return (rootViewController)
+		}
+	}
+	
+	private func _setColorsForBars() {
+		UINavigationBar.appearance().barTintColor = UIColor { tc in
+			switch tc.userInterfaceStyle {
+			case .dark:
+				return (darkThemeBarsColor)
+			default:
+				return (lightThemeBarsColor)
+			}
+		}
+		UINavigationBar.appearance().titleTextAttributes = [
+			NSAttributedString.Key.foregroundColor:
+				UIColor { tc in
+					switch tc.userInterfaceStyle {
+					case .dark:
+						return (darkThemeTintColorYellow)
+					default:
+						return (lightThemeTintColorPurple)
+					}
+				}
+		]
+		UITabBar.appearance().barTintColor = UIColor { tc in
+			switch tc.userInterfaceStyle {
+			case .dark:
+				return (darkThemeBarsColor)
+			default:
+				return (lightThemeBarsColor)
+			}
+		}
+		UITabBar.appearance().tintColor = UIColor { tc in
+			switch tc.userInterfaceStyle {
+			case .dark:
+				return (darkThemeTintColorYellow)
+			default:
+				return (lightThemeTintColorPurple)
+			}
 		}
 	}
 	

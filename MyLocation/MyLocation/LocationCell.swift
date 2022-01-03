@@ -23,21 +23,23 @@ class LocationCell: UITableViewCell {
 	
 	func configure(for location: Location) {
 		
+		_setLabelsColors()
+		
 		descriptionLabel.text = location.locationDescription != "" ? location.locationDescription : "(NoDescription)"
 		photoImageView.image = _thumbnail(for: location)
 		photoImageView.contentMode = .scaleToFill
 		if let placemark = location.placemark {
 			var text = ""
-			if let s = placemark.subThoroughfare {
-				text = s + " "
+			text.add(text: placemark.subThoroughfare)
+			text.add(text: placemark.thoroughfare, separatedBy: " ")
+			text.add(text: placemark.locality, separatedBy: ", ")
+			if (text == "") {
+				addressLabel.text = String(format: "Lat: %.6f, Long: %.6f",
+													location.latitude,
+													location.longitude)
+			} else {
+				addressLabel.text = text
 			}
-			if let s = placemark.thoroughfare {
-				text += s + ", "
-			}
-			if let s = placemark.locality {
-				text += s
-			}
-			addressLabel.text = text
 		} else {
 			addressLabel.text = String(format: "Lat: %.6f, Long: %.6f",
 												location.latitude,
@@ -50,6 +52,10 @@ class LocationCell: UITableViewCell {
 			return image.resized(withBounds: CGSize(width: 52, height: 52))
 		}
 		return (UIImage(systemName: "gear")!)
+	}
+	
+	private func _setLabelsColors() {
+		
 	}
 
 }
