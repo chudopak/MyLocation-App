@@ -45,6 +45,7 @@ class LocationDetailsViewController : UITableViewController {
 				imageView.isHidden = false
 				imageView.image = image
 				addPhotoLabel.text = ""
+				tableView.reloadData()
 			} else {
 				imageView.isHidden = true
 				addPhotoLabel.text = "Add Photo"
@@ -52,6 +53,7 @@ class LocationDetailsViewController : UITableViewController {
 		}
 	}
 	
+	var observer: Any!
 	
 	@IBOutlet weak var	addressCellView: UIView!
 	@IBOutlet weak var	descriptionTextView: UITextView!
@@ -62,11 +64,16 @@ class LocationDetailsViewController : UITableViewController {
 	@IBOutlet weak var	imageView: UIImageView!
 	@IBOutlet weak var	addPhotoLabel: UILabel!
 	@IBOutlet weak var	addressLabel: UILabel!
-	
 
+	deinit {
+//		print("*** deinit \(self)")
+		NotificationCenter.default.removeObserver(observer!)
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		_listenForBackgroundNotification()
 		addressLabel.numberOfLines = 0
 		if locationToEdit != nil {
 			title = "Edit Location"
@@ -106,11 +113,17 @@ class LocationDetailsViewController : UITableViewController {
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		if (indexPath.section == 0 && indexPath.row == 0) {
 			return (88)
+		} else if (indexPath.section == 1 && indexPath.row == 0) {
+			if let image = _image {
+				let ratio = image.size.height / image.size.width
+				print(tableView.layoutMargins.left, tableView.layoutMargins.right)
+				let height = (UIScreen.main.bounds.width - tableView.layoutMargins.left - tableView.layoutMargins.right)  * ratio
+				return (height)
+			} else {
+				return (44)
+			}
 		} else if (indexPath.section == 2 && indexPath.row == 2) {
 			addressLabel.frame.size = textSize(font: UIFont.systemFont(ofSize: 17), text: addressLabel.text!)
-			print()
-			print(addressLabel.bounds.size.height)
-			print()
 			return (addressLabel.frame.size.height + 26)
 		} else {
 			return (44)
@@ -233,6 +246,18 @@ class LocationDetailsViewController : UITableViewController {
 			}
 		} catch {
 			fatalCoreDataError(error)
+		}
+	}
+	
+	private func _listenForBackgroundNotification() {
+
+		observer = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification,
+											   object: nil,
+											   queue: OperationQueue.main) { [weak self] _ in
+			if let weakSelf = self {
+				weakSelf.dismiss(animated: false, completion: nil)
+				weakSelf.descriptionTextView.resignFirstResponder()
+			}
 		}
 	}
 }
