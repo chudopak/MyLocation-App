@@ -28,6 +28,7 @@ class CategoryPickerViewController : UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		navigationController?.navigationBar.tintColor = adaptiveTintColorForTitlesAndButtons
+		view.backgroundColor = adaptiveBackgroundColor
 	}
 	
 	
@@ -46,6 +47,7 @@ class CategoryPickerViewController : UITableViewController {
 		} else {
 			cell.accessoryType = .none
 		}
+		cell.backgroundColor = adaptiveBackgroundColor
 		return (cell)
 	}
 	

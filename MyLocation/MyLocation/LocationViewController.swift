@@ -46,7 +46,6 @@ class LocationViewController : UITableViewController {
 		_performFetch()
 		navigationItem.rightBarButtonItem = editButtonItem
 		navigationItem.rightBarButtonItem?.title = "🔏"
-//		editButtonItem.setBackgroundImage(UIImage(named: "CloseButton"), for: .application, barMetrics: .default)
 	}
 
 	override func setEditing(_ editing: Bool, animated: Bool) {
@@ -71,9 +70,30 @@ class LocationViewController : UITableViewController {
 		return fetchedResultsController.sections!.count
 	}
 	
+	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let labelRect = CGRect(x: 15,
+							   y: tableView.sectionHeaderHeight - 14,
+							   width: UIScreen.main.bounds.width,
+							   height: 14)
+		let label = UILabel(frame: labelRect)
+		label.font = UIFont.boldSystemFont(ofSize: 14)
+		label.text = tableView.dataSource!.tableView!(tableView, titleForHeaderInSection: section)
+		label.textColor = adaptiveTintColorForTitlesAndButtons
+		label.backgroundColor = .clear
+		
+		let viewRect = CGRect(x: 0,
+							  y: 0,
+							  width: tableView.bounds.size.width,
+							  height: tableView.sectionHeaderHeight)
+		let view = UIView(frame: viewRect)
+		view.backgroundColor = .clear
+		view.addSubview(label)
+		return (view)
+	}
+	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		let sectionInfo = fetchedResultsController.sections![section]
-		return (sectionInfo.name)
+		return (sectionInfo.name.uppercased())
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

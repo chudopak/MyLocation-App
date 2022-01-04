@@ -19,6 +19,9 @@ class LocationCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+		photoImageView.layer.cornerRadius = photoImageView.bounds.size.width / 2
+		photoImageView.clipsToBounds = true
+		separatorInset = UIEdgeInsets(top: 0, left: 82, bottom: 0, right: 0)
     }
 	
 	func configure(for location: Location) {
@@ -57,6 +60,7 @@ class LocationCell: UITableViewCell {
 	private func _setLabelsColors() {
 		addressLabel.textColor = adaptiveTintColorRegularAdress
 		addressLabel.alpha = 0.4
+		descriptionLabel.textColor = adaptiveTintColorForTitlesAndButtons
 	}
 
 }
