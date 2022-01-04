@@ -273,39 +273,9 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 	}
 	
 	private func _setColors() {
-		view.backgroundColor = UIColor { tc in
-			switch tc.userInterfaceStyle {
-			case .dark:
-				return (darkThemeBackgroundColor)
-			default:
-				return (lightThemeBackgroundColor)
-			}
-		}
-		view.tintColor = UIColor { tc in
-			switch tc.userInterfaceStyle {
-			case .dark:
-				return (darkThemeTintColor)
-			default:
-				return (lightThemeTintColor)
-			}
-		}
-		
-		tagButton.tintColor = UIColor { tc in
-			switch tc.userInterfaceStyle {
-			case .dark:
-				return (darkThemeTintColorYellow)
-			default:
-				return (lightThemeTintColorPurple)
-			}
-		}
-		
-		getButton.tintColor = UIColor { tc in
-			switch tc.userInterfaceStyle {
-			case .dark:
-				return (darkThemeTintColorYellow)
-			default:
-				return (lightThemeTintColorPurple)
-			}
-		}
+		view.backgroundColor = adaptiveBackgroundColor
+		view.tintColor = adaptiveTintColorRegular
+		tagButton.tintColor = adaptiveTintColorForTitlesAndButtons
+		getButton.tintColor = adaptiveTintColorForTitlesAndButtons
 	}
 }

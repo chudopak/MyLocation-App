@@ -12,13 +12,16 @@ import MapKit
 
 class MapViewController : UIViewController {
 	
-	@IBOutlet weak var mapView: MKMapView!
+	@IBOutlet weak var	mapView: MKMapView!
+	@IBOutlet weak var	userBarButton: UIBarButtonItem!
+	@IBOutlet weak var	locationsBarButton: UIBarButtonItem!
 	
 	var locations = [Location]()
 	var managedObjectContext: NSManagedObjectContext!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		_setColors()
 		mapView.delegate = self
 	}
 	
@@ -131,6 +134,27 @@ class MapViewController : UIViewController {
 		let region = _region(for: locations)
 		mapView.setRegion(region, animated: true)
 	}
+	
+	
+	private func _setColors() {
+		userBarButton.tintColor = UIColor { tc in
+			switch tc.userInterfaceStyle {
+			case .dark:
+				return (darkThemeTintColorYellow)
+			default:
+				return (lightThemeTintColorPurple)
+			}
+		}
+		
+		locationsBarButton.tintColor = UIColor { tc in
+			switch tc.userInterfaceStyle {
+			case .dark:
+				return (darkThemeTintColorYellow)
+			default:
+				return (lightThemeTintColorPurple)
+			}
+		}
+	}
 }
 
 extension MapViewController: MKMapViewDelegate {
@@ -150,10 +174,14 @@ extension MapViewController: MKMapViewDelegate {
 			pinView.isEnabled = true
 			pinView.canShowCallout = true
 			pinView.animatesDrop = false
-			pinView.pinTintColor = UIColor(red: 0.32, green: 0.82, blue: 0.4, alpha: 1)
+			pinView.pinTintColor = adaptiveTintColorForTitlesAndButtons
 			
-			let rightButton = UIButton(type: .detailDisclosure)
-			rightButton.addTarget(self, action: #selector(showLocationDetails), for: .touchUpInside)
+			let rightButton: UIButton = {
+				let button =  UIButton(type: .detailDisclosure)
+				button.tintColor = adaptiveTintColorForTitlesAndButtons
+				button.addTarget(self, action: #selector(showLocationDetails), for: .touchUpInside)
+				return (button)
+			}()
 			pinView.rightCalloutAccessoryView = rightButton
 			
 			annotationView = pinView

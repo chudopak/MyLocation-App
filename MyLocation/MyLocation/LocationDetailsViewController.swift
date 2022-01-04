@@ -275,25 +275,23 @@ class LocationDetailsViewController : UITableViewController {
 			}
 		}
 	}
-	
+
 	private func _setColors() {
-		doneButton.tintColor = UIColor { tc in
-			switch tc.userInterfaceStyle {
-			case .dark:
-				return (darkThemeTintColorYellow)
-			default:
-				return (lightThemeTintColorPurple)
-			}
-		}
+		descriptionTextView.backgroundColor = adaptiveBackgroundColor
 		
-		closeButton.tintColor = UIColor { tc in
-			switch tc.userInterfaceStyle {
-			case .dark:
-				return (darkThemeTintColorYellow)
-			default:
-				return (lightThemeTintColorPurple)
-			}
-		}
+		doneButton.tintColor = adaptiveTintColorForTitlesAndButtons
+		closeButton.tintColor = adaptiveTintColorForTitlesAndButtons
+
+		descriptionTextView.textColor = adaptiveTintColorRegular
+		categoryLabel.textColor = adaptiveTintColorRegular
+		latitudeLabel.textColor = adaptiveTintColorRegular
+		longitudeLabel.textColor = adaptiveTintColorRegular
+		dateLabel.textColor = adaptiveTintColorRegular
+		addPhotoLabel.textColor = adaptiveTintColorRegular
+		addressLabel.textColor = adaptiveTintColorRegular
+		
+		tableView.backgroundColor = adaptiveBackgroundColor
+		view.backgroundColor = adaptiveBackgroundColor
 	}
 }
 
@@ -301,6 +299,7 @@ extension LocationDetailsViewController: UIImagePickerControllerDelegate, UINavi
 	
 	func choosePhotoFromLibrary() {
 		let imagePicker = UIImagePickerController()
+		imagePicker.view.tintColor = adaptiveTintColorForTitlesAndButtons
 		imagePicker.sourceType = .photoLibrary
 		imagePicker.delegate = self
 		imagePicker.allowsEditing = true
@@ -309,6 +308,7 @@ extension LocationDetailsViewController: UIImagePickerControllerDelegate, UINavi
 	
 	func takeNewPhoto() {
 		let imagePicker = UIImagePickerController()
+		imagePicker.view.tintColor = adaptiveTintColorForTitlesAndButtons
 		imagePicker.sourceType = .camera
 		imagePicker.delegate = self
 		imagePicker.allowsEditing = true
@@ -337,7 +337,7 @@ extension LocationDetailsViewController: UIImagePickerControllerDelegate, UINavi
 	
 	func showPhotoMenu() {
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-		
+		alert.view.tintColor = adaptiveTintColorForTitlesAndButtons
 		let actCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
 		
 		alert.addAction(actCancel)

@@ -51,11 +51,12 @@ class LocationCell: UITableViewCell {
 		if location.hasPhoto, let image = location.photoImage {
 			return image.resized(withBounds: CGSize(width: 52, height: 52))
 		}
-		return (UIImage(systemName: "gear")!)
+		return (UIImage(systemName: "questionmark.circle")!)
 	}
 	
 	private func _setLabelsColors() {
-		
+		addressLabel.textColor = adaptiveTintColorRegularAdress
+		addressLabel.alpha = 0.4
 	}
 
 }

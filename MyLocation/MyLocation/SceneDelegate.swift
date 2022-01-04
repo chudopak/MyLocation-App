@@ -113,41 +113,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
 	
 	private func _setColorsForBars() {
-		UINavigationBar.appearance().barTintColor = UIColor { tc in
-			switch tc.userInterfaceStyle {
-			case .dark:
-				return (darkThemeBarsColor)
-			default:
-				return (lightThemeBarsColor)
-			}
-		}
+		UINavigationBar.appearance().barTintColor = adaptiveBarsColor
 		UINavigationBar.appearance().titleTextAttributes = [
 			NSAttributedString.Key.foregroundColor:
-				UIColor { tc in
-					switch tc.userInterfaceStyle {
-					case .dark:
-						return (darkThemeTintColorYellow)
-					default:
-						return (lightThemeTintColorPurple)
-					}
-				}
+				adaptiveTintColorRegular
 		]
-		UITabBar.appearance().barTintColor = UIColor { tc in
-			switch tc.userInterfaceStyle {
-			case .dark:
-				return (darkThemeBarsColor)
-			default:
-				return (lightThemeBarsColor)
-			}
-		}
-		UITabBar.appearance().tintColor = UIColor { tc in
-			switch tc.userInterfaceStyle {
-			case .dark:
-				return (darkThemeTintColorYellow)
-			default:
-				return (lightThemeTintColorPurple)
-			}
-		}
+		UITabBar.appearance().barTintColor = adaptiveBarsColor
+		UITabBar.appearance().tintColor = adaptiveTintColorForTitlesAndButtons
 	}
 	
 }

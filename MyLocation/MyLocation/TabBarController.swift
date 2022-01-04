@@ -13,7 +13,18 @@ class TabBarController: UITabBarController {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
 	}
-
+	
+	override var preferredStatusBarStyle: UIStatusBarStyle {
+		switch traitCollection.userInterfaceStyle {
+		case .dark:
+			return .lightContent
+		default:
+			return .darkContent
+		}
+	}
+	override var childForStatusBarStyle: UIViewController? {
+		return nil
+	}
 
 }
 

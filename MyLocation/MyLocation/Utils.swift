@@ -11,13 +11,13 @@ class CategoryCell {
 	var name: String
 	var cIndex: Int
 	var indexPath: IndexPath
-	
+
 	init() {
 		name = ""
 		cIndex = -1
 		indexPath = IndexPath(row: cIndex, section: 0)
 	}
-	
+
 	convenience init(name: String) {
 		self.init()
 		self.name = name

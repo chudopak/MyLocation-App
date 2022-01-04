@@ -42,6 +42,7 @@ class LocationViewController : UITableViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		_setColors()
 		_performFetch()
 		navigationItem.rightBarButtonItem = editButtonItem
 		navigationItem.rightBarButtonItem?.title = "🔏"
@@ -86,6 +87,7 @@ class LocationViewController : UITableViewController {
 												 for: indexPath) as! LocationCell
 		
 		let location = fetchedResultsController.object(at: indexPath)
+		cell.backgroundColor = adaptiveBackgroundColor
 		cell.configure(for: location)
 		return (cell)
 	}
@@ -117,6 +119,12 @@ class LocationViewController : UITableViewController {
 				controller.locationToEdit = fetchedResultsController.object(at: indexPath)
 			}
 		}
+	}
+	
+	private func _setColors() {
+		tableView.backgroundColor = adaptiveBackgroundColor
+		view.backgroundColor = adaptiveBackgroundColor
+		
 	}
 }
 

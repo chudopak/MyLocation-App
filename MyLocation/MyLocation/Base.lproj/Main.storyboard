@@ -3,6 +3,7 @@
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -79,7 +80,7 @@
                         <viewLayoutGuide key="safeArea" id="AkI-21-a9k"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Tag" id="StS-U3-min"/>
+                    <tabBarItem key="tabBarItem" title="Tag" image="Tag" selectedImage="Tag" id="StS-U3-min"/>
                     <connections>
                         <outlet property="addressLabel" destination="1uF-3v-4F6" id="rcI-zp-544"/>
                         <outlet property="getButton" destination="Ktf-AU-Sha" id="TRn-c5-kbD"/>
@@ -121,6 +122,7 @@
                                                 </textView>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="backgroundColor"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="7U3-IM-umD" detailTextLabel="Ztl-AI-5xN" style="IBUITableViewCellStyleValue1" id="wzg-zM-pcb">
                                         <rect key="frame" x="0.0" y="112.33333396911621" width="375" height="43.666667938232422"/>
@@ -145,6 +147,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="backgroundColor"/>
                                         <connections>
                                             <segue destination="R5J-Jn-Dzx" kind="show" identifier="PickCategory" id="YQR-Kg-quL"/>
                                         </connections>
@@ -179,6 +182,7 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="XIa-bP-E3T" secondAttribute="trailing" id="s4V-U9-9gu"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="backgroundColor"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -207,6 +211,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="backgroundColor"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" textLabel="7rP-s9-0DI" detailTextLabel="WTF-xR-RC4" style="IBUITableViewCellStyleValue1" id="Qey-wM-Ism">
                                         <rect key="frame" x="0.0" y="340.66667435385966" width="375" height="43.666667938232422"/>
@@ -231,6 +236,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="backgroundColor"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" textLabel="aCB-9V-fxE" detailTextLabel="jgV-3s-ofn" rowHeight="65" style="IBUITableViewCellStyleValue1" id="6qd-dK-2bx">
                                         <rect key="frame" x="0.0" y="384.33334229209208" width="375" height="65"/>
@@ -255,6 +261,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="backgroundColor"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" textLabel="czw-XR-5Gb" detailTextLabel="OFr-53-ccp" style="IBUITableViewCellStyleValue1" id="Nnn-jq-NB8">
                                         <rect key="frame" x="0.0" y="449.33334229209208" width="375" height="43.666667938232422"/>
@@ -279,6 +286,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="backgroundColor"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -406,6 +414,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="separatorColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationCell" rowHeight="58" id="XVf-E0-nd2" customClass="LocationCell" customModule="MyLocation" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="24.333333969116211" width="375" height="58"/>
@@ -417,7 +426,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0rl-91-Bq7">
                                             <rect key="frame" x="76" y="31" width="283" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <color key="textColor" systemColor="tertiaryLabelColor"/>
+                                            <color key="textColor" name="MyTint"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fql-pT-pqe">
@@ -468,7 +477,7 @@
         <scene sceneID="cAf-K9-3jh">
             <objects>
                 <navigationController id="OoS-5S-TUu" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Location" id="ydm-XU-jca"/>
+                    <tabBarItem key="tabBarItem" title="Location" image="mappin.and.ellipse" catalog="system" selectedImage="mappin.and.ellipse" id="ydm-XU-jca"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ve5-l8-xlz">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -515,7 +524,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="locationsBarButton" destination="GV0-v8-JRV" id="4wm-Fm-Du4"/>
                         <outlet property="mapView" destination="8w3-kh-XCg" id="g0e-Q2-fC6"/>
+                        <outlet property="userBarButton" destination="W51-dD-dvB" id="VDb-mh-ajN"/>
                         <segue destination="p17-oX-OKp" kind="presentation" identifier="EditLocation" modalPresentationStyle="fullScreen" id="boc-ti-3HD"/>
                     </connections>
                 </viewController>
@@ -527,7 +538,7 @@
         <scene sceneID="gdQ-YP-HBn">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rMB-jZ-0yT" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Map" id="4Ro-ZJ-z2Z"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="map" catalog="system" id="4Ro-ZJ-z2Z"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ebl-xR-7Xs">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
@@ -544,17 +555,24 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="w7n-Ab-BzU"/>
+        <segue reference="r4O-N5-oEv"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" name="MyTint"/>
     <resources>
+        <image name="Tag" width="30" height="30"/>
+        <image name="map" catalog="system" width="128" height="110"/>
+        <image name="mappin.and.ellipse" catalog="system" width="118" height="128"/>
+        <namedColor name="MyTint">
+            <color red="0.36100000143051147" green="0.21600000560283661" blue="0.29800000786781311" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="backgroundColor">
+            <color red="0.98039215686274506" green="0.97254901960784312" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="tertiaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
