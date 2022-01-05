@@ -10,26 +10,26 @@ This app made for saving your favorite locations you've been to. It is based on 
 - CAAnimation
 
 ### App Overview
-##### Start screen with animated button
+#### Start screen with animated button
 <p align="center">
 	<img src="./ReadmeFiles/StartScreenDarkTheme.gif" alt="animated" />
 	<img src="./ReadmeFiles/StartScreenLightTheme.gif" alt="animated" />
-</p>`
+</p>
 
-##### Tag new location
+#### Tag new location
 <p align="center">
 	<img src="./ReadmeFiles/TagLocationDarkTheme.gif" alt="animated" />
 	<img src="./ReadmeFiles/TagLocationLightTheme.gif" alt="animated" />
-</p>`
+</p>
 
-##### Taged Locations Screen + Edit Location Screen
+#### Taged Locations Screen + Edit Location Screen
 <p align="center">
 	<img src="./ReadmeFiles/TagedLocationsScreen+EditScreenDarkMode.gif" alt="animated" />
 	<img src="./ReadmeFiles/TagedLocationsScreen+EditScreenLightMode.gif" alt="animated" />
-</p>`
+</p>
 
-##### Map Screen
+#### Map Screen
 <p align="center">
 	<img src="./ReadmeFiles/MapScreenDarkTheme.gif" alt="animated" />
 	<img src="./ReadmeFiles/MapScreenLightTheme.gif" alt="animated" />
-</p>`
+</p>
