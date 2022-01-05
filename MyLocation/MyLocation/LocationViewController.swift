@@ -45,16 +45,16 @@ class LocationViewController : UITableViewController {
 		_setColors()
 		_performFetch()
 		navigationItem.rightBarButtonItem = editButtonItem
-		navigationItem.rightBarButtonItem?.title = "🔏"
+		navigationItem.rightBarButtonItem?.title = "Edit"
 	}
 
 	override func setEditing(_ editing: Bool, animated: Bool) {
 		super.setEditing(editing,animated:animated)
 		if (isEditing) {
-			editButtonItem.title = "👍"
+			editButtonItem.title = "Done"
 		}
 		else {
-			editButtonItem.title = "🔏"
+			editButtonItem.title = "Edit"
 		}
 	}
 	

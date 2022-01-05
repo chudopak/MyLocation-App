@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 let darkThemeBackgroundColor = UIColor(red: 0.113, green: 0.125, blue: 0.129, alpha: 1)
-let lightThemeBackgroundColor = UIColor(red: 250 / 256, green: 248 / 256, blue: 246 / 256, alpha: 1)
+let lightThemeBackgroundColor = UIColor(red: 248 / 255, green: 245 / 255, blue: 238 / 255, alpha: 1)
 let adaptiveBackgroundColor = UIColor { tc in
 	switch tc.userInterfaceStyle {
 	case .dark:
@@ -32,7 +32,7 @@ let adaptiveTintColorRegular = UIColor { tc in
 
 
 let darkThemeTintColorYellow = UIColor(red: 255 / 256, green: 214 / 256, blue: 10 / 256, alpha: 1)
-let lightThemeTintColorPurple = UIColor(red: 92 / 256, green: 55 / 256, blue: 76 / 256, alpha: 1)
+let lightThemeTintColorPurple = UIColor(red: 82 / 256, green: 15 / 256, blue: 45 / 256, alpha: 1)
 let adaptiveTintColorForTitlesAndButtons = UIColor { tc in
 	switch tc.userInterfaceStyle {
 	case .dark:
@@ -44,7 +44,7 @@ let adaptiveTintColorForTitlesAndButtons = UIColor { tc in
 
 
 let darkThemeBarsColor = UIColor(red: 32 / 256, green: 32 / 256, blue: 32 / 256, alpha: 1)
-let lightThemeBarsColor = UIColor(red: 248 / 256, green: 249 / 256, blue: 250 / 256, alpha: 1)
+let lightThemeBarsColor = UIColor(red: 238 / 256, green: 235 / 256, blue: 228 / 256, alpha: 1)
 let adaptiveBarsColor = UIColor { tc in
 	switch tc.userInterfaceStyle {
 	case .dark:

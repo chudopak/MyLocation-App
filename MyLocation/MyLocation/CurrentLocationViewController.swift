@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import CoreData
 
-class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate {
+class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate, CAAnimationDelegate {
 	
 	let locationManager = CLLocationManager()
 	var location: CLLocation?
@@ -35,26 +35,45 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 	@IBOutlet weak var tagButton: UIButton!
 	@IBOutlet weak var getButton: UIButton!
 	
+	@IBOutlet weak var containerView: UIView!
+	
+	private var _isLogoVisible = false
+	
+	lazy var logoButton: UIButton = {
+		let button = UIButton(type: .custom)
+		switch traitCollection.userInterfaceStyle {
+		case .dark:
+			button.setBackgroundImage(UIImage(named: "LogoDark"), for: .normal)
+		default:
+			button.setBackgroundImage(UIImage(named: "LogoLight"), for: .normal)
+		}
+		button.sizeToFit()
+		button.addTarget(self, action: #selector(getLocation), for: .touchUpInside)
+		button.center.x = self.view.bounds.midX
+		button.center.y = self.view.safeAreaLayoutGuide.layoutFrame.height * 0.45
+		button.bounds = CGRect(x: 0,
+							   y: 0,
+							   width: self.view.bounds.size.width * 0.9,
+							   height: self.view.bounds.size.width * 0.9)
+		return (button)
+	}()
+	
+	let spinnerTag = 107
+	
+	lazy var spinner: UIActivityIndicatorView = {
+		let spinner = UIActivityIndicatorView(style: .medium)
+		spinner.center.x = messageLabel.center.x
+		spinner.center.y = messageLabel.center.y + spinner.bounds.size.height + 25
+		spinner.startAnimating()
+		spinner.tag = spinnerTag
+		return (spinner)
+	} ()
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		_setColors()
-		_updateLabels()
-		_configureGetButtonText()
-	}
-	
-	@IBAction func getLocation() {
-		if (!_validateAuthorizationStatus()) {
-			return
-		}
-		placemark = nil
-		lastGeocodingError = nil
-		if updatingLocation {
-			_stopLocationManager()
-		} else {
-			location = nil
-			lastLocationError = nil
-			_startLocationManager()
-		}
+		_setConstraints()
+		_showLogoView()
 		_updateLabels()
 		_configureGetButtonText()
 	}
@@ -172,14 +191,33 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 			latitudeTextLabel.isHidden = true
 			longitudeTextLabel.isHidden = true
 		}
-		messageLabel.text = _getMessageLabelText()
+		if (_isLogoVisible) {
+			messageLabel.text = ""
+		} else {
+			messageLabel.text = _getMessageLabelText()
+		}
+	}
+	
+	private func _showLogoView() {
+		if (!_isLogoVisible) {
+			_isLogoVisible = true
+			containerView.isHidden = true
+			view.addSubview(logoButton)
+		}
 	}
 	
 	private func _configureGetButtonText() {
 		if (updatingLocation) {
 			getButton.setTitle("Stop", for: .normal)
+			
+			if (view.viewWithTag(spinnerTag) == nil) {
+				containerView.addSubview(spinner)
+			}
 		} else {
 			getButton.setTitle("Get My Location", for: .normal)
+			if let spinner = view.viewWithTag(spinnerTag) {
+				spinner.removeFromSuperview()
+			}
 		}
 	}
 	
@@ -200,6 +238,93 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 			controller.placemark = placemark
 			controller.managedObjectContext = managedObjectContext
 		}
+	}
+	
+	private func _hideLogoView() {
+		_isLogoVisible = false
+		containerView.isHidden = false
+		
+		containerView.center.x = view.bounds.size.width * 2
+		containerView.center.y = 40 + containerView.bounds.size.height / 2
+		
+		let centerX = view.bounds.midX
+		
+		let panelMover = _configurePanelMover(centerX: centerX)
+		containerView.layer.add(panelMover, forKey: "panelMover")
+		
+		let logoMover = _configureLogoMover(centerX: centerX)
+		logoButton.layer.add(logoMover, forKey: "logoMover")
+
+		let logoRotator = _configureLogoRotator(centerX: centerX)
+		logoButton.layer.add(logoRotator, forKey: "logoRotator")
+	}
+	
+	private func _configureLogoMover(centerX: CGFloat) -> CABasicAnimation {
+		let logoMover = CABasicAnimation(keyPath: "position")
+		logoMover.isRemovedOnCompletion = false
+		logoMover.fillMode = CAMediaTimingFillMode.forwards
+		logoMover.duration = 0.5
+		logoMover.fromValue = NSValue(cgPoint: logoButton.center)
+		logoMover.toValue = NSValue(cgPoint:
+			  CGPoint(x: -centerX, y: logoButton.center.y))
+		logoMover.timingFunction = CAMediaTimingFunction(
+						 name: CAMediaTimingFunctionName.easeIn)
+		return (logoMover)
+	}
+	
+	private func _configureLogoRotator(centerX: CGFloat) -> CABasicAnimation {
+		let logoRotator = CABasicAnimation(keyPath:
+							   "transform.rotation.z")
+		logoRotator.isRemovedOnCompletion = false
+		logoRotator.fillMode = CAMediaTimingFillMode.forwards
+		logoRotator.duration = 0.5
+		logoRotator.fromValue = 0.0
+		logoRotator.toValue = -2 * Double.pi
+		logoRotator.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
+		return (logoRotator)
+	}
+	
+	private func _configurePanelMover(centerX: CGFloat) -> CABasicAnimation {
+		let panelMover = CABasicAnimation(keyPath: "position")
+		panelMover.isRemovedOnCompletion = false
+		panelMover.fillMode = CAMediaTimingFillMode.forwards
+		panelMover.duration = 0.6
+		panelMover.fromValue = NSValue(cgPoint: containerView.center)
+		panelMover.toValue = NSValue(cgPoint: CGPoint(x: centerX,
+													  y: containerView.center.y))
+		panelMover.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
+		panelMover.delegate = self
+		return (panelMover)
+	}
+	
+	func animationDidStop(_ anim: CAAnimation,
+				   finished flag: Bool) {
+		containerView.layer.removeAllAnimations()
+		containerView.center.x = view.bounds.size.width * 0.5
+		containerView.center.y = containerView.bounds.size.height * 0.5
+		logoButton.layer.removeAllAnimations()
+		logoButton.removeFromSuperview()
+	}
+	
+	//MARK: - Button targets
+	@IBAction func getLocation() {
+		if (!_validateAuthorizationStatus()) {
+			return
+		}
+		if (_isLogoVisible) {
+			_hideLogoView()
+		}
+		placemark = nil
+		lastGeocodingError = nil
+		if updatingLocation {
+			_stopLocationManager()
+		} else {
+			location = nil
+			lastLocationError = nil
+			_startLocationManager()
+		}
+		_updateLabels()
+		_configureGetButtonText()
 	}
 	
 	//MARK: - CLLocationManagerDelegate
@@ -283,5 +408,97 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 		view.tintColor = adaptiveTintColorRegular
 		tagButton.tintColor = adaptiveTintColorForTitlesAndButtons
 		getButton.tintColor = adaptiveTintColorForTitlesAndButtons
+	}
+	
+	private func _setConstraints() {
+		let safeAreaHeight = view.safeAreaLayoutGuide.layoutFrame.size.height
+		let containerViewHeight = safeAreaHeight * 0.65
+		let messageLabelHeight: CGFloat = 40
+		let tagButtonHeight: CGFloat = 35
+		let latitudeHeight: CGFloat = 25
+		let longitudeHeight: CGFloat = 25
+		let addressLabelHeight: CGFloat = 50
+		let getButtonHeight: CGFloat = 40
+		
+		let filledHeightSpase = messageLabelHeight + tagButtonHeight + latitudeHeight + longitudeHeight + addressLabelHeight
+		
+		let emptyHeightSpace = containerViewHeight - filledHeightSpase
+		
+		let latitudeLabelWidth: CGFloat = 130
+		let longitudeLabelWidth: CGFloat = 130
+		
+		containerView.translatesAutoresizingMaskIntoConstraints = false
+		tagButton.translatesAutoresizingMaskIntoConstraints = false
+		messageLabel.translatesAutoresizingMaskIntoConstraints = false
+		latitudeLabel.translatesAutoresizingMaskIntoConstraints = false
+		longitudeLabel.translatesAutoresizingMaskIntoConstraints = false
+		latitudeTextLabel.translatesAutoresizingMaskIntoConstraints = false
+		longitudeTextLabel.translatesAutoresizingMaskIntoConstraints = false
+		addressLabel.translatesAutoresizingMaskIntoConstraints = false
+		getButton.translatesAutoresizingMaskIntoConstraints = false
+		
+		NSLayoutConstraint.activate([
+			containerView.heightAnchor.constraint(equalToConstant: containerViewHeight),
+			containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+			containerView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 16),
+			containerView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16)
+		])
+		
+		NSLayoutConstraint.activate([
+			tagButton.heightAnchor.constraint(equalToConstant: tagButtonHeight),
+			tagButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+			tagButton.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 40),
+			tagButton.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -40)
+		])
+		
+		NSLayoutConstraint.activate([
+			messageLabel.heightAnchor.constraint(equalToConstant: messageLabelHeight),
+			messageLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
+			messageLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor),
+			messageLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor)
+		])
+		
+		NSLayoutConstraint.activate([
+			latitudeLabel.heightAnchor.constraint(equalToConstant: latitudeHeight),
+			latitudeLabel.widthAnchor.constraint(equalToConstant: latitudeLabelWidth),
+			latitudeLabel.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: emptyHeightSpace * 0.2),
+			latitudeLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor)
+		])
+
+		NSLayoutConstraint.activate([
+			latitudeTextLabel.heightAnchor.constraint(equalToConstant: latitudeHeight),
+			latitudeTextLabel.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: emptyHeightSpace * 0.2),
+			latitudeTextLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor),
+			latitudeTextLabel.rightAnchor.constraint(equalTo: latitudeLabel.leftAnchor)
+		])
+		
+		NSLayoutConstraint.activate([
+			longitudeLabel.heightAnchor.constraint(equalToConstant: longitudeHeight),
+			longitudeLabel.widthAnchor.constraint(equalToConstant: longitudeLabelWidth),
+			longitudeLabel.topAnchor.constraint(equalTo: latitudeLabel.bottomAnchor, constant: emptyHeightSpace * 0.1),
+			longitudeLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor)
+		])
+
+		NSLayoutConstraint.activate([
+			longitudeTextLabel.heightAnchor.constraint(equalToConstant: longitudeHeight),
+			longitudeTextLabel.topAnchor.constraint(equalTo: latitudeLabel.bottomAnchor, constant: emptyHeightSpace * 0.1),
+			longitudeTextLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor),
+			longitudeTextLabel.rightAnchor.constraint(equalTo: latitudeLabel.leftAnchor)
+		])
+		
+		NSLayoutConstraint.activate([
+			addressLabel.heightAnchor.constraint(equalToConstant: addressLabelHeight),
+			addressLabel.topAnchor.constraint(equalTo: longitudeLabel.bottomAnchor, constant: emptyHeightSpace * 0.2),
+			addressLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor),
+			addressLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor)
+		])
+
+		NSLayoutConstraint.activate([
+			getButton.heightAnchor.constraint(equalToConstant: getButtonHeight),
+			getButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant:  -(safeAreaHeight * 0.05)),
+			getButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
+			getButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30)
+		])
+		
 	}
 }
